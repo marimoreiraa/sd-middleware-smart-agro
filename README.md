@@ -44,8 +44,10 @@ O código foi desenvolvido em **Python** e utiliza tecnologias como **MQTT**, **
 ## **Arquitetura do Sistema**
 
 A arquitetura do sistema é baseada em uma comunicação **pub/sub** utilizando MQTT, garantindo modularidade e facilidade de integração. 
+
 ![Diagrama da Arquitetura](./img/diagram.png)
----
+
+
 ### **Componentes Principais**
 1. **Sensores e Atuadores**
    - **Sensores:** Publicam dados para tópicos MQTT.

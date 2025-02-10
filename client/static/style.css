@@ -1,0 +1,178 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background: url('./img/background.jpg') no-repeat center center fixed;
+    background-size: cover;
+    color: black;
+}
+
+.navbar {
+    background: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 10px 20px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.navbar ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: space-around;
+}
+
+.navbar ul li {
+    display: inline;
+}
+
+.navbar ul li a {
+    text-decoration: none;
+    color: #000;
+    font-weight: bold;
+    padding: 10px 15px;
+    transition: background 0.3s ease;
+}
+
+.navbar ul li a:hover {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+
+.container, .controller-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+}
+
+.actuators, .sensors, .charts , .controllers{
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+}
+
+.actuator, .sensor, .chart, .controller {
+    background: rgba(255, 255, 255, 0.75);
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    min-width: 150px;
+}
+
+.icon {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 10px;
+}
+
+.chart canvas {
+    width: 100%;
+    max-width: 400px;
+    height: 200px;
+}
+
+.main-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.form-container {
+    background: rgba(255, 255, 255, 0.75);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 400px;
+    text-align: center;
+}
+
+.form-container h2 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.form-container label {
+    display: block;
+    margin: 10px 0;
+    color: #333;
+}
+
+.form-container input[type="number"],
+.form-container input[type="checkbox"] {
+    margin-top: 5px;
+    margin-bottom: 15px;
+}
+
+.form-container button {
+    background: #007BFF;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.form-container button:hover {
+    background: #0056b3;
+}
+
+.form-container form button {
+    display: block;
+    margin-top: 20px; /* Adiciona um espaço acima do botão */
+    width: 100%; /* Opcional: faz o botão ocupar toda a largura do formulário */
+}
+
+.chart-container {
+    background: rgba(255, 255, 255, 0.95); /* Fundo branco com leve transparência */
+    border-radius: 15px; /* Bordas arredondadas mais suaves */
+    padding: 30px; /* Mais espaçamento interno */
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2); /* Sombra mais evidente */
+    width: 3000; /* Largura máxima maior */
+    margin: 10px auto; /* Centraliza e adiciona mais espaço vertical */
+    text-align: center; /* Centraliza o texto */
+}
+
+.chart-container h3 {
+    margin-bottom: 20px; /* Mais espaço entre o título e o gráfico */
+    color: #333; /* Cor do título */
+    font-size: 1.5rem; /* Tamanho maior da fonte */
+    font-weight: bold; /* Texto em negrito */
+}
+
+.chart-container canvas {
+    width: 100%; /* Largura total do contêiner */
+    height: auto; /* Altura ajustada automaticamente */
+    width: 750px; /* Maior largura máxima */
+    height: 500px; /* Maior altura máxima */
+}
+
+form button {
+    background: #007BFF; /* Cor azul */
+    color: white; /* Texto branco */
+    border: none; /* Remove a borda padrão */
+    padding: 10px 20px; /* Espaçamento interno para um botão maior */
+    border-radius: 15px; /* Bordas arredondadas */
+    cursor: pointer; /* Aponta o cursor para o botão */
+    font-size: 16px; /* Tamanho da fonte ajustado */
+    transition: background 0.3s ease, transform 0.2s ease; /* Animação para hover */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra leve */
+}
+
+form button:hover {
+    background: #0056b3; /* Cor azul mais escura ao passar o mouse */
+    transform: scale(1.05); /* Leve aumento no tamanho */
+}
+
+form button:active {
+    background: #003f7f; /* Azul mais escuro ao clicar */
+    transform: scale(0.95); /* Leve redução no tamanho */
+}

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agricultura Inteligente</title>
+    <link rel="stylesheet" href="../static/style.css">
+    <link rel="icon" href="../static/img/logo.png" type="image/png">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <ul>
+            <li><a href="/">Voltar</a></li>
+            <li><a href="{{ url_for('control_sensors', controller_id=selected_controller) }}">Ativar/Desativar Sensor</a></li>
+            <li><a href="{{ url_for('control_actuators', controller_id=selected_controller) }}">Ativar/Desativar Atuador</a></li>
+        </ul>
+    </nav>
+    
+    <div class="container">
+        {% if selected_controller == "lighting" %}
+        <div id="lighting" class="controller-section">
+            <h2>Controlador de Iluminação</h2>
+            <div class="actuators">
+                <div class="actuator">
+                    <img src="../static/img/light_sensor.png" alt="Iluminação" class="icon">
+                    <p>Iluminação: <span id="lighting-status">{{ actuators.get('lighting', 'Desconhecido') }}</span></p>
+                </div>
+            </div>
+            <div class="sensors">
+                <div class="sensor">
+                    <p>Luminosidade: <span id="luminosity">{{ sensors.get('luminosity', 'Desconhecido') }}</span></p>
+                </div>
+            </div>
+        </div>
+        {% elif selected_controller == "cooling" %}
+        <div id="cooling" class="controller-section">
+            <h2>Controlador de Resfriamento</h2>
+            <div class="actuators">
+                <div class="actuator">
+                    <img src="../static/img/cooling_sensor.png" alt="Refrigeração" class="icon">
+                    <p>Refrigeração: <span id="cooling-status">{{ actuators.get('cooling', 'Desconhecido') }}</span></p>
+                </div>
+            </div>
+            <div class="sensors">
+                <div class="sensor">
+                    <p>Temperatura: <span id="temperature">{{ sensors.get('temperature', 'Desconhecido') }}</span></p>
+                </div>
+            </div>
+        </div>
+        {% elif selected_controller == "irrigation" %}
+        <div id="irrigation" class="controller-section">
+            <h2>Controlador de Irrigação</h2>
+            <div class="actuators">
+                <div class="actuator">
+                    <img src="../static/img/irrigation_sensor.png" alt="Irrigação" class="icon">
+                    <p>Irrigação: <span id="irrigation-status">{{ actuators.get('irrigation', 'Desconhecido') }}</span></p>
+                </div>
+            </div>
+            <div class="sensors">
+                <div class="sensor">
+                    <p>Umidade do Solo: <span id="soil-moisture">{{ sensors.get('soil_moisture', 'Desconhecido') }}</span></p>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <p>Selecione um controlador para visualizar os dados.</p>
+        {% endif %}
+
+        <!-- Gráfico de histórico -->
+        <div class="chart-container">
+            <h3>Histórico do Sensor</h3>
+            <canvas id="historical-chart"></canvas>
+        </div>
+
+        <!-- Botão para simular failover -->
+        <form method="post" action="{{ url_for('simulate_failover', controller_id=selected_controller) }}">
+            <button type="submit">Simular Failover</button>
+        </form>
+    </div>
+    
+    
+    <script>
+        // Receber os dados históricos enviados pelo Flask
+        const historicalData = {{ historical_data | safe }};
+        historicalData.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+        
+        // Extrair os dados para o gráfico
+        const timestamps = historicalData.map(item => {
+            const fullDate = new Date(item.timestamp);  // Cria um objeto Date válido
+            return fullDate.toLocaleTimeString('pt-BR', { timeZone: '-06:00' }); // Apenas a hora no formato HH:MM:SS
+        });
+    
+        const values = historicalData.map(item => item.value);
+        
+        // Renderizar o gráfico
+        const ctx = document.getElementById('historical-chart').getContext('2d');
+        const historicalChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: timestamps,  // Apenas as horas no eixo X
+                datasets: [{
+                    label: 'Valores do Sensor',
+                    data: values,
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderWidth: 3, /* Aumenta a espessura da linha */
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                },
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Horário (HH:MM:SS)',
+                            font: { size: 14 }
+                        },
+                        ticks: {
+                            maxTicksLimit: 8
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Valor',
+                            font: { size: 14 }
+                        },
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+    
+    <script>
+        setTimeout(function() {
+            location.reload(); // Recarrega a página automaticamente a cada 30 segundos
+        }, 30000); // 30 segundos
+    </script>
+</body>
+</html>

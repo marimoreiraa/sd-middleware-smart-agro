@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajustar Parâmetros de Controle</title>
+    <link rel="stylesheet" href="../static/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <ul>
+            <li><a href="{{ url_for('controller_data', controller_id=selected_controller) }}">Dados em Tempo Real</a></li>
+            <li><a href="{{ url_for('adjust_parameters', controller_id=selected_controller) }}">Ajustar Parâmetros de Controle</a></li>
+            <li><a href="{{ url_for('control_sensors', controller_id=selected_controller) }}">Ativar/Desativar Sensores</a></li>
+            <li><a href="{{ url_for('control_actuators', controller_id=selected_controller) }}">Ativar/Desativar Atuadores</a></li>
+        </ul>
+    </nav>
+
+    <div class="main-container">
+        <div class="form-container">
+            <h2>Ajustar Parâmetros de Controle para {{ selected_controller }}</h2>
+            
+            <p>Limite Atual: <strong>{{ current_limit }}</strong></p>
+            
+            <form method="POST" action="{{ url_for('adjust_parameters', controller_id=selected_controller) }}">
+                <label for="new_value">Novo valor do limite:</label>
+                <input type="number" step="0.1" name="new_value" id="new_value" required>
+            
+                <button type="submit">Ajustar Limite</button>
+            </form>            
+        </div>
+    </div>
+</body>
+</html>
